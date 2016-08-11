@@ -7,25 +7,23 @@ plate <- data.frame( Row = rep(LETTERS[1:8], 12), Col = unlist(lapply(1:12, rep,
 suppressMessages(library(dplyr))
 labor <- src_mysql(dbname = "Laboratory", host = "amphiprion.deenr.rutgers.edu", user = "michelles", password = "larvae168", port = 3306, create = F)
 
-extract <- data.frame(labor %>% tbl("extraction") %>% filter(date == '2014-05-30'))
+# pull out sample IDs by date of procedure
+extract <- data.frame(labor %>% tbl("extraction") %>% filter(date == '2014-05-30'), stringsAsFactors = F)
 
-plate1 <- merge(plate, extract[1:96,1])
+plate1 <- cbind(plate, extract[1:96,1])
+names(plate1) <- c("Row", "Col", "ID")
+first <- min(plate1$ID)
+last <- max(plate1$ID)
+plate1$ID <- as.character(plate1$ID)
+platemap <- as.matrix(reshape2::acast(plate1,plate1[,1] ~ plate1[,2]))
+write.csv(platemap, file = paste(first, "-",last, ".csv"))
 
-# read in platemap csv
-platemap <- read.csv("~/Desktop/platemap.csv")
 
-# draw the plate
+plate2 <- cbind(plate, extract[97:192, 1])
+plate3 <- cbind(plate, extract[193:288, 1])
+plate4 <- cbind(plate, extract[289:384, 1])
 
-ggplot2::ggplot(data = platemap, aes(x=Column, y = Row)) + geom_point(size=10) +  labs(title = "Extraction E0151-E0246 platemap")
-
-
-# # show empty wells - not working
-# ggplot(data=platemap, aes(x=Column, y=Row)) + geom_point(data=expand.grid(seq(1, 12), seq(1, 8)), aes(x=Var1, y=Var2), color="grey90", fill="white", shape=21, size=6) + geom_point(size=10) + coord_fixed(ratio=(13/12)/(9/8), xlim = c(0.5, 12.5), ylim=c(0.5, 8.5)) + labs(title="Extraction E0151-E0246 platemap")
-# # Error: Discrete value supplied to continuous scale
-
-# Flip the axes
-
-ggplot2::ggplot(data = platemap, aes(x=Column, y = Row)) + geom_point(size=10) + 
-scale_y_reverse(breaks=seq(1, 8)) + 
-  scale_x_continuous(breaks=seq(1, 12)) +
-  labs(title = "Extraction E0151-E0246 platemap")
+## Jess's script
+#acast(y,y[,1] ~ y[,2])
+platemap <- as.matrix(reshape2::acast(plate1,plate1[,1] ~ plate1[,2]))
+write.csv(platemap, file = "plate1.csv")
