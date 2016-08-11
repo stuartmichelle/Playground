@@ -15,3 +15,5 @@ c4 <- labor %>% tbl("ligation") %>% select(ligation_ID, digest_ID)
 c5 <- data.frame(left_join(c4, c3, by = "digest_ID"))
 
 issue <- left_join(issue, c5, by = c("Ligation_ID" = "ligation_ID"))
+
+issue[order(issue$extraction_ID), ]
