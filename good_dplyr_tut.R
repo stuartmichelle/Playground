@@ -267,6 +267,19 @@ flights_tbl %>%
 # - July 2014 webinar about dplyr (and ggvis) by Hadley Wickham and related slides/code: mostly conceptual, with a bit of code
 # - dplyr tutorial by Hadley Wickham at the useR! 2014 conference: excellent, in-depth tutorial with lots of example code (Dropbox link includes slides, code files, and data files)
 # - dplyr GitHub repo and list of releases
+
+# from http://www.unomaha.edu/mahbubulmajumder/data-science/fall-2014/lectures/20-database-mysql/20-database-mysql.html#/11
+library(dplyr)
+conDplyr = src_mysql(dbname = "trainingDB", user = "training", 
+  password = "training123", host = "localhost")
+
+myData <- conDplyr %>%
+  tbl("titanic") %>%
+  select(pclass, sex, age, fare, survived, parch) %>%
+  filter(survived==0) %>%
+  collect() 
+
+head(myData)
 # 
 # < END OF DOCUMENT >
 
