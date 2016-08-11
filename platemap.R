@@ -18,12 +18,26 @@ plate1$ID <- as.character(plate1$ID)
 platemap <- as.matrix(reshape2::acast(plate1,plate1[,1] ~ plate1[,2]))
 write.csv(platemap, file = paste(first, "-",last, ".csv"))
 
-
 plate2 <- cbind(plate, extract[97:192, 1])
-plate3 <- cbind(plate, extract[193:288, 1])
-plate4 <- cbind(plate, extract[289:384, 1])
+names(plate2) <- c("Row", "Col", "ID")
+first <- plate2[1,3]
+last <- (plate2$ID[nrow(plate2)])
+plate2$ID <- as.character(plate2$ID)
+platemap <- as.matrix(reshape2::acast(plate2,plate2[,1] ~ plate2[,2]))
+write.csv(platemap, file = paste(first, "-",last, ".csv"))
 
-## Jess's script
-#acast(y,y[,1] ~ y[,2])
-platemap <- as.matrix(reshape2::acast(plate1,plate1[,1] ~ plate1[,2]))
-write.csv(platemap, file = "plate1.csv")
+plate3 <- cbind(plate, extract[193:288, 1])
+names(plate3) <- c("Row", "Col", "ID")
+first <- plate3[1,3]
+last <- (plate3$ID[nrow(plate3)])
+plate3$ID <- as.character(plate3$ID)
+platemap <- as.matrix(reshape2::acast(plate3,plate3[,1] ~ plate3[,2]))
+write.csv(platemap, file = paste(first, "-",last, ".csv"))
+
+plate4 <- cbind(plate, extract[289:384, 1])
+names(plate4) <- c("Row", "Col", "ID")
+first <- plate4[1,3]
+last <- (plate4$ID[nrow(plate4)])
+plate4$ID <- as.character(plate4$ID)
+platemap <- as.matrix(reshape2::acast(plate4,plate4[,1] ~ plate4[,2]))
+write.csv(platemap, file = paste(first, "-",last, ".csv"))
