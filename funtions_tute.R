@@ -45,3 +45,46 @@ standard.error <- function(x) {
   n <- length(x)
   sqrt(v/n)
 }
+
+######################################################
+x <- data$Height
+n <- length(x)
+(1/(n - 1))
+
+# what is the difference between all of the x values and the mean?
+m <- mean(x)
+x - m
+
+# square all of those differences
+(x-m)^2
+
+# compute the sum of squares
+sum((x-m)^2)
+
+# find the variance
+var(x)
+
+# clean up 
+rm(n,x,m)
+
+# define a function of all the pieces above
+variance <- function(x){
+  n <- length(x)
+  m <- mean(x)
+  (1/(n - 1)) * sum((x-m)^2)
+}
+
+# test it
+variance(data$Height)
+var(data$Height)
+
+# make a function for skewness
+skewness <- function(x) {
+  n <- length(x)
+  v <- var(x)
+  m <- mean(x)
+  third.moment <- (1/(n - 2)) * sum((x - m)^3)
+  third.moment/(var(x)^(3/2))
+}
+
+skewness(data$Height)  # should be 0.301
