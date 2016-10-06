@@ -101,7 +101,7 @@ num.vec[c(49, 103)] # get the 49th and 103rd element
 x <- 1:5
 
 # 5. Create a vector of 12, 17, 9, 11, save it as object y
-y <- c(12, 17, 9, 11)
+(y <- c(12, 17, 9, 11)) # putting parenthesis will also print this
 
 # 6. Create a vector of both x and y together
 z <- c(x, y)
