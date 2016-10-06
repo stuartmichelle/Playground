@@ -5,7 +5,7 @@
 ##########################################
 
 # Read CSV file using read.csv()
-data <- read.csv("mongolia_fish_data.csv")
+data <- read.csv("Chris's R Class/mongolia_fish_data.csv")
 
 # read.table skip= # of lines to skip - explore this more for qubit and plate reader outputs
 
@@ -122,7 +122,17 @@ plot(weight_g ~ tl_cm, data1, bty="n", las = 1, las = 2, subset = species_name =
 
 x-axis, y axis limits, labels, point color, size, shape, main title
 
-plot(weight_g ~ tl_cm, data1, bty="n", las = 1, las = 2, subset = species_name == "grayling-Hovsgol", x.lim = ) 
+# bty = n gets rid of the box around the outside of the plot
+# las = 1 makes y axis labels horizontal
+# las = 2 makes x axis labels vertical
+# col = "dark blue" makes points dark blues
+# pch = 8 makes the points star shaped
+
+plot(weight_g ~ tl_cm, data1, bty="n", las = 1, las = 2, col = "dark blue", 
+     subset = species_name == "grayling-Hovsgol", 
+     main = "Hovsgol grayling weight by length",
+     xlab = "length of fish (cm)", ylab = "weight of fish (g)", xlim = c(10,50), 
+     ylim = c(0,500), pch = 8) 
 
 
 
