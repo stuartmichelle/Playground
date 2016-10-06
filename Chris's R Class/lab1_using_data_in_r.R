@@ -5,7 +5,10 @@
 ##########################################
 
 # Read CSV file using read.csv()
-read.csv("mongolia_fish_data.csv")
+data <- read.csv("mongolia_fish_data.csv")
+
+# read.table skip= # of lines to skip - explore this more for qubit and plate reader outputs
+
 
 
 
@@ -14,22 +17,28 @@ read.csv("mongolia_fish_data.csv")
 
 # Inspect data
 # str(), head(), tail(), nrow(), ncol(), colnames()
-
-
+str(data)
+head(data)
+tail(data)
+nrow(data)
+ncol(data)
+colnames(data)
 
 # Reduce data to important columns 
 # ID, year, water body, species, age, length, weight, sex, egg count
-
+data1 <- subset(data, select = c(sample_id, year, water_body, species_name, age_otolith, tl_mm, weight_g, sex, egg_count))
 
 
 
 # Inspect data again
 # Inspect species names
-
-
+str(data1)
+unique(data1$species_name)
 
 # Subset data with []'s and $'s
-
+# Look at all the taiman
+data2 <- data1[data1$species_name == "taimen", ]
+data3 <- data1[data1$species_name == "taimen" & data1$tl_mm > 800 & !is.na(data1$tl_mm), ]
 
 
 
