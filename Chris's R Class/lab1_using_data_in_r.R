@@ -5,6 +5,7 @@
 ##########################################
 
 # Read CSV file using read.csv()
+read.csv("mongolia_fish_data.csv")
 
 
 
