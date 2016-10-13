@@ -11,8 +11,9 @@
 ################################################################
 
 #make new data frame with only the lengths,weights, and age of Lenok
+data <- read.csv("Chris's R Class/mongolia_fish_data.csv")
 
-
+data.lenok <- subset(data, species_name == "lenok", select = c("tl_mm", "weight_g"))
 
 # Make a scatter plot
 ################################################################
