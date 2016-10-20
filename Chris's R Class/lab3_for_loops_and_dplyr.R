@@ -90,17 +90,42 @@ for (i in 1:length(spp)){
 }
 
 # Sort data frame by length_avg
-
+length.stats <- length.stats[with(length.stats, order(length_avg)), ]
 
 # THE DPLYR PACKAGE
 ################################################################################
 
 # Calculate average and maximum length by species using dplyr
+length.stats1 <- as.data.frame(
+  data %>%
+    filter(species %in% spp) %>%
+  group_by(species) %>%
+  summarize(length_avg = mean(length_mm), 
+    length_max = max(length_mm)) %>%
+    mutate(length_diff = length_max - length_avg) %>%
+    arrange(desc(length_max))
+)
+
+# TEST IF COLLECT() WORKS INSTEAD OF DATA.FRAME
+rm(length.stats1)
+length.stats1 <- data %>%
+    group_by(species) %>%
+    summarize(length_avg = mean(length_mm)) %>%
+    collect()
 
 
-# Calculate average and maximum length by species and sex using dplyr
 
+# Calculate average and maximum length by species and sex using dplyr - only had to add ",sex" instead of having to interate through loop again
 
+length.stats1 <- as.data.frame(
+  data %>%
+    filter(species %in% spp & sex %in% c("M", "F")) %>%
+    group_by(species, sex) %>%
+    summarize(length_avg = mean(length_mm), 
+      length_max = max(length_mm)) %>%
+    mutate(length_diff = length_max - length_avg) %>%
+    arrange(desc(length_max))
+)
 
 
 
