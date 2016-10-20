@@ -77,14 +77,17 @@ for(i in 1:10){
 length.stats <- data.frame(species = spp, length_avg = NA, length_max = NA)
 
 # Loop through species names and calculate average and maximum
-
+# for testing i <- 1
+for (i in 1:length(spp)){
   # Subset species data
-
+  sdata <- subset(data, species == spp[i])
   # Calculate average and maximum length
-
+  length_avg <- mean(sdata$length_mm)
+  length_max <- max(sdata$length_mm)
   # Record average and maximum length in dataframe
-
-
+  length.stats$length_avg[i] <- length_avg
+  length.stats$length_max[i] <- length_max
+}
 
 # Sort data frame by length_avg
 
