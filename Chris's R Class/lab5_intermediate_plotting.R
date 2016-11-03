@@ -95,7 +95,35 @@ for (i in 1:4){
   X <- subset(data, species_name == spp[i], select = c(tl_mm, weight_g))
   plot(X$tl_mm, X$weight_g, main = titles[i], ylim = c(0, max(X[,2], na.rm = T)))
 }
-#### layout() - Organization of plot ####
+
+#### layout() - Organization of plot #### matrix input - multipanel figure where all panels are not the same size - plot a grid over your layout and then assign numbers to each box of the grid, plot will fill the space for the numbers assigned - heights = c(0.7, 0.3) the top will get 70% of the space and the bottom row will get 30% ### LAYOUT REPLACES THE PAR(MFROW()) code from above
+
+dev.off()
+
+# make matrix
+
+#all in one column
+matrix(1:10)
+
+# in 2 rows filled in by column
+matrix(1:10, nrow = 2)
+
+# in 2 rows filled in by row
+matrix(1:10, nrow = 2, byrow = T)
+
+# sample layout of plots
+matrix(1:4, nrow = 2, byrow = T)
+
+#  OUTPUT
+# [,1] [,2]
+# [1,]    1    2
+# [2,]    3    4
+
+layout(mat = matrix(1:4, nrow = 2, byrow = T))
+for (i in 1:4){
+  X <- subset(data, species_name == spp[i], select = c(tl_mm, weight_g))
+  plot(X$tl_mm, X$weight_g, main = titles[i], ylim = c(0, max(X[,2], na.rm = T)))
+}
 
 
 #### Exercise 1 - Create a plot with length-weight scatter plots for Lenok and Burbot
