@@ -1,6 +1,8 @@
 
 
 # 1. Read the Brazilian mahogany tree data into R
+
+
 # 2. Rename the data columns to your liking and subset to just the MR trees
 # 3. Use the reshape2 package to transform the (a) growth data and (b) fruit data from wide-to-long
 # 4. Use the dplyr package to calculate the min, mean, median, max, and number of observations

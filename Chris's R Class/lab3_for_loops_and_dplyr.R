@@ -126,13 +126,3 @@ length.stats1 <- as.data.frame(
     mutate(length_diff = length_max - length_avg) %>%
     arrange(desc(length_max))
 )
-
-
-
-
-
-
-
-
-
-
