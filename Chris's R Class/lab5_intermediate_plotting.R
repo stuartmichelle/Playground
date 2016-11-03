@@ -82,12 +82,19 @@ titles <- c("Lenok", "Burbot", "Grayling-Hovsgol", "Phoxinus")
 
 #Create loop of plots
 # test i <- 1
+par(mfrow = c(2,2), mar = c(3,4,2,1))
 par(mfrow = c(2,2))
 for (i in 1:4){
   X <- subset(data, species_name == spp[i], select = c(tl_mm, weight_g))
   plot(X$tl_mm, X$weight_g, main = titles[i])
 }
 
+# change ylim by 10%
+par(mfrow = c(2,2), mar = c(3,4,2,1))
+for (i in 1:4){
+  X <- subset(data, species_name == spp[i], select = c(tl_mm, weight_g))
+  plot(X$tl_mm, X$weight_g, main = titles[i], ylim = c(0, max(X[,2], na.rm = T)))
+}
 #### layout() - Organization of plot ####
 
 
