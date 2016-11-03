@@ -150,13 +150,22 @@ layout(mat = matrix(c(1, 1, 2, 3), nrow = 2, byrow = T))
 #################################################################
 # 3) rColorBrewer
 #################################################################
-
+# check out the website
+library(RColorBrewer)
 # View all potential Color Palettes
+dev.off()
+display.brewer.all()
 
 # Select a Color Palette
+reds <- brewer.pal(n = 5, "YlOrRd")
+display.brewer.pal(n = 9, "YlOrRd")
+reds <- brewer.pal(n = 5, "Reds")
+display.brewer.pal(n = 5, "Reds")
 
-# Interpolate a Color Palette
-
+# Interpolate a Color Palette - smooth
+redsnext <- colorRampPalette(brewer.pal(n = 5, name = "Reds"))(100)
+plot(1:20, 1:20, pch = 16, cex=30, col = redsnext) # make the 100 above a 20 for this one
+plot(1:100, rep(1,100), pch = 15, cex = 50, col = redsnext)
 #################################################################
 # 4) Random Numbers - Useful for making up data to test things
 #################################################################
