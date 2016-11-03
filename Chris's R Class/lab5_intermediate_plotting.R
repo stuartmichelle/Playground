@@ -76,11 +76,17 @@ plot(lenok[ , 1], lenok[ , 2])
 plot(lenok$tl_mm, lenok$weight_g)
 
 #Make list of species names for subset and plots
-
-
+summary(data$species_name)
+spp <- c("lenok", "burbot", "grayling-Hovsgol", "Phoxinus")
+titles <- c("Lenok", "Burbot", "Grayling-Hovsgol", "Phoxinus")
 
 #Create loop of plots
-
+# test i <- 1
+par(mfrow = c(2,2))
+for (i in 1:4){
+  X <- subset(data, species_name == spp[i], select = c(tl_mm, weight_g))
+  plot(X$tl_mm, X$weight_g, main = titles[i])
+}
 
 #### layout() - Organization of plot ####
 
