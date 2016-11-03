@@ -125,9 +125,27 @@ for (i in 1:4){
   plot(X$tl_mm, X$weight_g, main = titles[i], ylim = c(0, max(X[,2], na.rm = T)))
 }
 
+# if dev.off() isn't working, graphics.off() might help
 
-#### Exercise 1 - Create a plot with length-weight scatter plots for Lenok and Burbot
-#### on the bottom and a wide length histogram of both species together above
+#### Exercise 1 - Create a plot with length-weight scatter plots for Lenok and Burbot on the bottom and a wide length histogram of both species together above
+spp1 <- c("lenok", "burbot")
+titles1 <- c("Lenok", "Burbot")
+
+layout(mat = matrix(c(1, 1, 2, 3), nrow = 2, byrow = T))
+
+  Y <- subset(data, species_name == "lenok", select = c(species_name, tl_mm))
+  hist(Y$tl_mm, col = rgb(1,0,0,0.5), main = "freq of Lenok and Burbot lengths")
+  Z <- subset(data, species_name == "burbot", select = c(species_name, tl_mm))
+  hist(Z$tl_mm, add = T, col = rgb(0,1,0,0.5))
+
+  X <- subset(data, species_name == "lenok", select = c(tl_mm, weight_g))
+  plot(X$tl_mm, X$weight_g, main = "Lenok", ylim = c(0, max(X[,2], na.rm = T)), col = rgb(1,0,0,0.5))
+ 
+  W <- subset(data, species_name == "burbot", select = c(tl_mm, weight_g))
+  plot(X$tl_mm, X$weight_g, main = "Burbot", ylim = c(0, max(X[,2], na.rm = T)), col = rgb(0,1,0,0.5))
+
+
+
 
 #################################################################
 # 3) rColorBrewer
