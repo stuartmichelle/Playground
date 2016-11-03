@@ -23,39 +23,61 @@ y
 #### Margins mar() - Default c(5.1, 4.1, 4.1, 2.1)####
 plot(1:10, 1:10)
 par(mar = c(4,3,3,1))
-
+plot(1:10, 1:10)
 #### Plot Size pin() -  #### plot inches width, height
 par(pin = c(3,5))
-
-#### Axis Labels mgp() - Default c(3,1,0)####
+plot(1:10, 1:10)
+#### Axis Labels mgp() - Default c(3,1,0)#### how close the axis title is, how close the tick label is, how close the actual tick mark is
 #reset plot paramter and plot space
-dev.off()
-
 
 #First value changes axis labels
+dev.off()
+plot(1:10, 1:10)
+
+par(mgp = c(2, 1, 0))
+plot(1:10, 1:10)
 
 #Second tick labels
+par(mgp = c(2, 0.5, 0))
+plot(1:10, 1:10)
 
 #Third tick marks
+par(mgp = c(2, 0.5, 1))
+plot(1:10, 1:10)
 
-
-#### Outer Margin oma() - Default c(2,2,2,2)
-
+#### Outer Margin oma() - Default c(2,2,2,2) - tight multipanel figure, gives room for a y axis label
+par(oma=c(4,4,4,4))
+plot(1:10, 1:10)
 
 #### Reset par by dev.off() ####
+dev.off()
 
 #################################################################
 # 2) Multi-Panel Plots
 #################################################################
 
-#### mfrow() - Number of rows & cols. in plots ####
+#### mfrow() - Number of rows & cols. in plots ####, mfcol does the same by columns
+par(mfrow = c(2,2))
+plot(1:10, 1:10)
+plot(1:10, 1:10)
+plot(1:10, 1:10)
+plot(1:10, 1:10)
 
 #### Problem: Create a 2x2 plot of Length-Weight Relationship
 #### for 4 species. 
-
+dev.off()
 # Start with code for single plot
+data <- read.csv("Chris's R Class/mongolia_fish_data.csv")
+
+#one species
+lenok <- subset(data, species_name == "lenok", select= c(tl_mm, weight_g))
+
+plot(lenok[ , 1], lenok[ , 2])
+plot(lenok$tl_mm, lenok$weight_g)
 
 #Make list of species names for subset and plots
+
+
 
 #Create loop of plots
 
