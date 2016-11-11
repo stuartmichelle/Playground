@@ -6,7 +6,7 @@
 rm(list = ls())
 
 # Read data
-data_orig <- read.csv("mongolia_fish_data.csv", as.is=T)
+data_orig <- read.csv("Chris's R Class/mongolia_fish_data.csv", as.is=T)
 
 # Reduce data to important columns
 data_orig <- subset(data_orig, select=c(year, water_body, species_name, gear, tl_mm, weight_g))
@@ -20,20 +20,23 @@ data_orig$species <- tolower(data_orig$species)
 # SUBSET DATA TO FISH OF INTEREST
 ################################################################################
 
-# We want to look at trends in fish body lengths in Lake Hovsgol over time.
-# Decreases in body size are often used as evidence of a negative fishing
-# impact because fishing selectively removes large individuals from the population.
+# We want to look at trends in fish body lengths in Lake Hovsgol over time. 
+# Decreases in body size are often used as evidence of a negative fishing impact
+# because fishing selectively removes large individuals from the population.
 
 # Subset 1. Fish caught in Lake Hovsgol using horizontal-gillnets
+# take a look at how many are at each lake
 table(data_orig$water_body)
+
+# select only gillnet-horizontal captures at Hovsgol
 data <- subset(data_orig, water_body=="Hovsgol" & gear=="gillnet-horizontal")
 
-# Subset 2. Species of interest
+# Subset 2. Species of interest - reduce the above dataset even more
 table(data$species)
 species_list <- c("grayling-hovsgol", "lenok", "burbot", "roach", "perch")
 data <- subset(data, species %in% species_list)
 
-# Subset 3. Must have year and length information
+# Subset 3. Must have year and length information - and get rid of NAs
 data <- subset(data, !is.na(length_mm) & !is.na(year))
 
 
