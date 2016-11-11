@@ -54,10 +54,11 @@ plot(x = data.lenok$length, y = data.lenok$weight, type = "p", xlab = "Length", 
 
 #Editing point parameters
 #################
-#point type - here is a list of the character types, cex shrinks or expands point by factor
+#point type - here is a list of the character types, cex shrinks or expands point by factor - pch
 plot(1:25, rep(1,25), pch = 1:25)
 
 
+# cex makes the dots a bit smaller or larger
 plot(x = data.lenok$length, y = data.lenok$weight, type = "p", xlab = "Length", ylab = "Weight", main = "Lenok Length vs. Weight", xlim = c(0,700), ylim = c(0, 2000), pch = 16, cex = 0.5)
 
 #point color
