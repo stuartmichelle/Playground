@@ -1,5 +1,6 @@
 # Section 7 - Heatmaps and Mapping
 ################################################################################
+# install.packages("ggmap")
 
 # Load All Packages
 ################################################################################
@@ -84,41 +85,44 @@ colors <- blue2red(length(breaks)-1)
 image(x=temp.dates.all, y=0:50, z=b, bty="n", 
       xlab="Date", ylab="Depth (m)", col=colors)
 
-# Improve x-axis and y-axis labels
+# Improve x-axis and y-axis labels - suppress drawing of axis with xaxt/yaxt
 image(x=temp.dates.all, y=0:50, z=b, bty="n", xaxt="n", yaxt="n",
       xlab="Date", ylab="Depth (m)", col=colors)
+# draw axis back in 
+# specify dates on x axis - plot dates
 axis.Date(1, at=seq(min.date, max.date, by="1 mon"), cex.axis=0.85)
 axis(side=2, at=seq(0, 50, 5), labels=rev(seq(0, 50, 5)), las=1, cex.axis=0.9)
 
-# Plot temperature legend
-colorlegend(col=colors, zlim=c(min(breaks), max(breaks)), posx=c(0.93,.95),
-            zlevels=length(breaks), dz=1, main="Temp (°C)", main.cex=0.8, cex=0.7)
+# Plot temperature legend - why you made breaks before
+colorlegend(col=colors, zlim=c(min(breaks), max(breaks)), posx=c(0.93,.95), zlevels=length(breaks), dz=1, main="Temp (ËšC)", main.cex=0.8, cex=0.7)
 
 #### Can also use filled.contour for same figure
 
-filled.contour(x=temp.dates.all, y=0:50, z=b, bty="n", xaxt="n", yaxt="n",
-      xlab="Date", ylab="Depth (m)", color.palette=blue2red)
+filled.contour(x=temp.dates.all, y=0:50, z=b, bty="n", xaxt="n", yaxt="n", xlab="Date", ylab="Depth (m)", color.palette=blue2red, nlevels = 15)
 
 
-filled.contour(x=temp.dates.all, y=0:50, z=b, bty="n", xaxt="n", yaxt="n",
-               key.title = title(main= 'Temp (°C)',cex.main=.9,line=1),
-               xlab="Date", ylab="Depth (m)", col=colors,nlevels=14)
+filled.contour(x=temp.dates.all, y=0:50, z=b, bty="n", xaxt="n", yaxt="n", key.title = title(main= 'Temp (?C)',cex.main=.9,line=1), xlab="Date", ylab="Depth (m)", col=colors,nlevels=14)
+
+dev.off()
+graphics.off()
 
 # Making Maps
 ################################################################################
 
 #Maps Package for basic maps and for polygons
-
-
+map(database = "world")
 map('world')
+map('world', c("Canada", "USA"))
+map('world', "Philippines")
 map('worldHires')
+map('worldHires', xlim = c(-77, -75), ylim = c(35,39))
+map('worldHires', xlim = c(-90, -70), ylim = c(30,50))
 map('usa')
 map('state')
 map('state','New.Jersey')
 map('county','New.Jersey')
 map('state',region=c('New.Jersey','New.York','Pennsylvania','Delaware'))
-map('state',region=c('New.Jersey','New.York','Pennsylvania','Delaware'),
-    xlim=c(-76,-70),ylim=c(37,42))
+map('state',region=c('New.Jersey','New.York','Pennsylvania','Delaware'), xlim=c(-76,-70),ylim=c(37,42))
 
 mp<-map('state',region=c('New.Jersey','New.York','Pennsylvania','Delaware'),plot=F,fill=T)
 
@@ -126,9 +130,8 @@ mp<-map('state',region=c('New.Jersey','New.York','Pennsylvania','Delaware'),plot
 #### Using ggplot2 with maps
 
 #Use ggplot() with geom_polygon
-usa<-map_data('usa')
-ggplot()+geom_polygon(data=usa, aes(x=long,y=lat,group=group))+
-  coord_fixed(1.3)
+usa <- map_data("usa")
+ggplot()+geom_polygon(data=usa, aes(x=long,y=lat,group=group))+coord_fixed(1.3)
 # coord_fixed used for the projection of the map (aspect ratio of the points)
 
 # Try plotting one state
@@ -138,36 +141,52 @@ ggplot()+geom_polygon(data=NJ, aes(x=long,y=lat,group=group))+
 
 # Plotting multiple states, Zoomed in Slightly, with Border Lines
 MidAtl<-map_data(map = 'state',region=c('new.jersey','delaware','pennsylvania','maryland','New.York','Connecticut'))
-ggplot()+
-  geom_polygon(data=MidAtl, aes(x=long,y=lat,group=group),fill='grey50',color='black')+
-  coord_fixed(xlim=c(-76,-73),ylim=c(38,41),ratio=1.3)
+ggplot() + geom_polygon(data=MidAtl, aes(x=long,y=lat,group=group),fill='grey50',color='black') + coord_fixed(xlim=c(-76,-73),ylim=c(38,41),ratio=1.3)
 
+ggplot() + geom_polygon(data=MidAtl, aes(x=long,y=lat,group=group, fill = group),color='red') + coord_fixed(1.3)
 
-#### Using ggmap
+#### Using ggmap #######################################
 
-data2<-read.csv('Mongolia Fish Data.csv')
-taimen<-subset(data2,species_name=='taimen'& !is.na(long_dd)& !is.na(tl_mm),select=c(long_dd,lat_dd,tl_mm))
-colnames(taimen)<-c('lon','lat','tl')
-box<-make_bbox(lon=taimen$lon,lat=taimen$lat,f=0.1)
-river.map<-get_map(location=box,maptype='satellite',source='google',zoom=9)
+data2 <- read.csv("Chris's R Class/mongolia_fish_data.csv")
+taimen <- subset(data2,species_name=='taimen'& !is.na(long_dd) & !is.na(tl_mm), select = c(long_dd,lat_dd,tl_mm))
+
+colnames(taimen) <- c("lon","lat","tl")
+
+# f is the buffer to extend the area, use a fraction
+box <- make_bbox(lon=taimen$lon,lat=taimen$lat, f=0.15)
+
+#let's make the buffer bigger
+box <- make_bbox(lon=taimen$lon,lat=taimen$lat, f=0.3)
+
+# uses online source to pull map
+# map type is satellite, terrain, road, overlay, larger number zoom is closer (15 is close, 20 is too close, 2 is too far)
+# river.map <- get_map(location = box, maptype = 'satellite', source = 'google', zoom = 15)
+river.map <- get_map(location = box, maptype = 'satellite', source = 'google')
+eg <- get_map(location = box, maptype = 'satellite', source = 'google')
 
 ggmap(river.map)
+ggmap(eg)
 
-# Or Specify the center of the map
-cent<-c(mean(taimen$lon),mean(taimen$lat))
-river.map<-get_map(location=cent,maptype='satellite',source='google',zoom=10)
+save(eg, file = 'eg.map.rdata')
+
+# Or Specify the center of the map - find the center by taking the mean of the lat and lon
+cent <- c(mean(taimen$lon), mean(taimen$lat))
+# river.map <- get_map(location = cent, maptype = 'satellite', source = 'google', zoom = 11)
+# river.map <- get_map(location = cent, maptype = 'satellite', source = 'google')
 ggmap(river.map)
 
 #Changing Scale
 ggmap(river.map)+
-  scale_x_continuous(limits=c(101.5,102.5),expand=c(0,0))+
-  scale_y_continuous(limits=c(50.2,50.5),expand=c(0,0))
+  scale_x_continuous(limits=c(101.75,102),expand=c(0,0)) + scale_y_continuous(limits=c(50.2,50.5),expand=c(0,0))
 
 #Adding Points to A map
 ggmap(river.map)+
   scale_x_continuous(limits=c(101.75,102),expand=c(0,0))+
   scale_y_continuous(limits=c(50.2,50.5),expand=c(0,0))+
   geom_point(data=taimen,color='red3',size=2)
+
+ggmap(river.map)+
+  geom_point(data=taimen)
 
 #Add a scale color based on fish length
 ggmap(river.map)+
@@ -176,6 +195,8 @@ ggmap(river.map)+
   geom_point(data=taimen,aes(color=tl),size=3)+
   scale_color_gradientn(colours=brewer.pal(4,'Reds'))
 
+ggmap(river.map) + geom_point(data=taimen, aes(color=tl, size = 3)) + scale_color_gradientn(colours = brewer.pal(5, "Spectral")) 
+
 #Scale Point size based on fish length
 ggmap(river.map)+
   scale_x_continuous(limits=c(101.75,102),expand=c(0,0))+
@@ -183,6 +204,14 @@ ggmap(river.map)+
   geom_point(data=taimen,aes(size=tl),col='grey50')+
   geom_point(data=taimen,shape=1,aes(size=tl),colour='black')
 
+ggmap(river.map)+
+  scale_x_continuous(limits=c(101.75,102),expand=c(0,0))+
+  scale_y_continuous(limits=c(50.2,50.5),expand=c(0,0))+
+  geom_point(data=taimen,aes(size=tl),col='white')+
+  geom_point(data=taimen,shape=1,aes(size=tl),colour='black')
+
+
+##################################################################################
 # Exercise - Create a Terrain Map of Pearch & Spiny Loach
 # Make sure all points are present in your map and color code the points by species
 fish<-subset(data2,species_name %in% c('perch','spiny loach') & !is.na(long_dd),select=c(species_name,long_dd,lat_dd,tl_mm))

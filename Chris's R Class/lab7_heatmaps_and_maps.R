@@ -19,11 +19,11 @@ library(RColorBrewer)
 rm(list = ls())
 
 # Read temperature data
-setwd("C://Users/Joseph/Documents/Classes Fall 2016/R Workshop")
-load("interpolated_thermister_string_data.Rdata")
+# setwd("C://Users/Joseph/Documents/Classes Fall 2016/R Workshop")
+load("Chris's R Class/interpolated_thermister_string_data.Rdata")
 
 # Read date data
-temp.dates.data <- read.csv("temperature_data_collection_dates.csv", as.is=T)
+temp.dates.data <- read.csv("Chris's R Class/temperature_data_collection_dates.csv", as.is=T)
 
 # Add simulated temperature data to temp.dates.data
 temp.dates.data$temp_c <- 3 + 1:nrow(temp.dates.data) * 0.04 + rnorm(nrow(temp.dates.data), 0, 0.5)
