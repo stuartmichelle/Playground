@@ -106,5 +106,10 @@ layout (matrix(c(1,1,2,2,0,3,3,4), nrow = 2, byrow = T))
 # make a data frame date, species name, and number of fish caught, subset that for each species, aggregating the datas
 # first loop is going to make a water body, 2nd loop is going to take out each speices and plot them
 for (i in 1:3){
-  
+  A <- as.data.frame(
+    data %>%
+      filter(water_body == body[i] & !is.na(date)) %>%
+      group_by(date, species_name) %>%
+      summarize(n = length(tl_mm)) #aggregating function of how many fish were caught in general
+  )
 }
