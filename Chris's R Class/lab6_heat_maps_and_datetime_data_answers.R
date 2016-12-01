@@ -1,6 +1,4 @@
 
-# install.packages("shape")
-# install.packages("colorRamps")
 
 # READ DATA
 ################################################################################
@@ -13,10 +11,10 @@ library(shape) # colorlegend()
 library(colorRamps) # blue2red()
 
 # Read temperature data
-load("Chris's R Class/interpolated_thermister_string_data.Rdata")
+load("interpolated_thermister_string_data.Rdata")
 
 # Read date data
-temp.dates.data <- read.csv("Chris's R Class/temperature_data_collection_dates.csv", as.is=T)
+temp.dates.data <- read.csv("temperature_data_collection_dates.csv", as.is=T)
 
 # Add simulated temperature data to temp.dates.data
 temp.dates.data$temp_c <- 3 + 1:nrow(temp.dates.data) * 0.04 + rnorm(nrow(temp.dates.data), 0, 0.5)
@@ -61,9 +59,7 @@ as.Date(temp.dates.data)
 ################################################################################
 
 # Format data
-# this line reverses the data???
 b <- t(apply(temp.data, 2, rev))
-
 min.date <- min(temp.dates.all)
 max.date <- max(temp.dates.all)
 min.date.data <- min(temp.dates.data)
