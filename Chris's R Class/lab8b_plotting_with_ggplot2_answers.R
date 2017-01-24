@@ -5,6 +5,7 @@
 # 2) Barplots
 # 3) Boxplots
 # 4) Histograms
+install.packages("ggplot2")
 
 library(ggplot2)
 library(reshape2)
@@ -14,8 +15,8 @@ library(RColorBrewer)
 # Read in Data
 ################################################################################
 
-setwd("C://Users/Joseph/Documents/Classes Fall 2016/R Workshop")
-data<-read.csv('Mongolia Fish Data.csv')
+# setwd("C://Users/Joseph/Documents/Classes Fall 2016/R Workshop")
+# data<-read.csv('Mongolia Fish Data.csv')
 data$date<-as.Date(data$date,format = "%m/%d/%Y")
 data$year<-format(data$date,'%Y')
 
@@ -53,7 +54,7 @@ leng.df2<-subset(leng.df,species %in% c('lenok','burbot'))
 # 1) Scatter Plots & Basics
 ################################################################################
 
-# Start with Simple Points
+# Start with Simple Points - plots points with default settings 
 ggplot(lenok,aes(x=tl_mm,y=weight_g))+
   geom_point()
 

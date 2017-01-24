@@ -30,17 +30,22 @@ year<-"2015_05"
 	
 
 	names = names(collections)
-	for (i in 1:7){
-	  # TODO make this go the entire number of fish we have caught (add columns to excel spreadsheet)
-	  # for (i in 1:length(excelspreadsheetcolumns))
-	  size <- paste("Size", i, sep = "")
-	  id <- paste("ID", i, sep = "")
-	  color <- paste("Col", i, sep = "")
-	  recap <- paste("Recap", i, sep = "")
-	  tag <- paste("TagID", i, sep = "")
-	  k <- subset(anem$id, )
-	} 
-  
+	# for (i in 1:7){
+	#   # TODO make this go the entire number of fish we have caught (add columns to excel spreadsheet)
+	#   # for (i in 1:length(excelspreadsheetcolumns))
+	#   size <- paste("Size", i, sep = "")
+	#   id <- paste("ID", i, sep = "")
+	#   color <- paste("Col", i, sep = "")
+	#   recap <- paste("Recap", i, sep = "")
+	#   tag <- paste("TagID", i, sep = "")
+	#   k <- subset(anem$id, )  anem$ID1
+	# } 
+	
+	A <- as.data.frame(
+	  anem %>%
+	    filter(water_body == body[i] & !is.na(date)) %>%
+	    group_by(date, species_name) %>%
+	    summarize(n = length(tl_mm))  
 	  
 	
 	

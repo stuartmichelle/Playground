@@ -105,6 +105,8 @@ layout (matrix(c(1,1,2,2,0,3,3,4), nrow = 2, byrow = T))
 
 # make a data frame date, species name, and number of fish caught, subset that for each species, aggregating the datas
 # first loop is going to make a water body, 2nd loop is going to take out each speices and plot them
+
+# this is the same as the double for loop above but "easier"
 for (i in 1:3){
   A <- as.data.frame(
     data %>%
@@ -112,4 +114,13 @@ for (i in 1:3){
       group_by(date, species_name) %>%
       summarize(n = length(tl_mm)) #aggregating function of how many fish were caught in general
   )
+  plot(0,0, xlim = range(A$date, na.rm = T), ylim = c(0,ylims[i]), type = "n", xlab = "Date", ylab = "Cumulative Count", main = body[i], xaxt = "n") # plot empty plot, type n = blank plot
+  axis(1, at = seq(min(A$date, na.rm = T), max(A$date, na.rm = T), 365), labels = seq(min(A$date, na.rm = T), max(A$date, na.rm = T), 365)) # just drawing x axis so use 1, 365 is the "by"
+  for (j in 1:8){
+    B <- subset(A, species_name == spp[j]) # plot by species
+    B$cum.l <- cumsum(B$n) # takes a cumulative sum of number caught by day for that water body
+    lines(B$date, B$cum.l, lwd = 2, lty = 1, col = cols[j]) # plot it, pull color from our vector of colors
+  }
 }
+plot(0,0, xaxt = "n", yaxt = "n", type = "n", bty = "n", xlab = "", ylab = "")
+legend(-2, 1, legend = spp, fill = cols, xpd = T) #xpd lets you plot outside of the plot region, allows freeform plotting

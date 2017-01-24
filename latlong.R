@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 # Connect to database using dplyr
 suppressMessages(library(dplyr))
-leyte <- src_mysql(dbname = "Leyte", host = "amphiprion.deenr.rutgers.edu", user = "michelles", password = "larvae168", port = 3306, create = F)
+leyte <- src_mysql(dbname = "Leyte", default.file = path.expand("~/myconfig.cnf"), port = 3306, create = F, host = NULL, user = NULL, password = NULL)
 
 # Bring in anemone info
 anem <- leyte %>% tbl("anemones") %>% select(anem_table_id, dive_table_id, ObsTime)
