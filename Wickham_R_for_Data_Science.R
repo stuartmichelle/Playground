@@ -71,4 +71,20 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy)) + 
   facet_grid(drv ~ cyl) # one axis is subplots is drv and the other is cyl
 
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid(. ~ cyl) # subplots by column 
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid(drv ~ .) # subplots by row
+
+# Exercises ############################
+# what happens if you faced a continuous variable? It makes a separate plot for each value
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ cty) # each plot is by class
+
+
+
 
