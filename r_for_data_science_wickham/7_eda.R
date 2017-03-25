@@ -3,6 +3,7 @@
 library(tidyverse)
 # source("/Users/Whitmore/Library/Mobile Documents/com~apple~CloudDocs/Documents/Philippines/Phil_code/conleyte.R")
 source("~/Documents/Philippines/Phil_code/conleyte.R")
+leyte <- conleyte()
 
 # visualize variation in your variables ####
 
@@ -11,7 +12,7 @@ ggplot(data = diamonds) +
   geom_bar(mapping = aes(x = cut))
 
 # try with clownfish data - use tail color
-leyte <- conleyte()
+
 leyte %>% tbl("clownfish", na.rm = T) %>% filter(!is.na(col)) %>% collect() %>% # the na.rm isn't working
   ggplot(mapping = aes(x = col)) +
   geom_bar()
@@ -88,7 +89,8 @@ leyte %>% tbl("clownfish") %>% filter(!is.na(size), Spp == "APCL") %>% collect()
 # what about fish we clipped?
 leyte %>% tbl("clownfish") %>% filter(!is.na(size), !is.na(ID)) %>% collect() %>%
   ggplot(mapping = aes(x = size)) +
-  geom_histogram(binwidth = 0.5)
+  geom_histogram(binwidth = 0.5) +
+  ggtitle("Distribution of size of clownfish from which DNA was taken")
 
 # count
 leyte %>% tbl("clownfish") %>% filter(!is.na(size), !is.na(ID)) %>% collect() %>% count(cut_width(size, 0.5))

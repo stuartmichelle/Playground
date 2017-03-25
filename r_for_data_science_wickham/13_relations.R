@@ -3,6 +3,14 @@
 library(tidyverse)
 library(nycflights13)
 
+
+# test - want to keep all in x and all in y that is not in x
+
+x <- planes[1:10, 1:3]
+y <- planes[5:15, 1:3]
+
+z <- anti_join(x, y)
+
 # keys ####
 # count to make sure your primary key is actually primary
 planes %>% 
@@ -91,7 +99,7 @@ flights %>%
 flights %>% 
   semi_join(top_dest) # instead do a semi join that keeps everything in flights that matches the top 10 dests
 
-# anti_join(x,y) - drops all rows of x that have a match in y ####
+# anti_join(x,y) - drops all rows of x that have a match in y #### - what is in y that is not in x
 flights %>%
   anti_join(planes, by = "tailnum") %>% # how many flights do not have a match in planes
   count(tailnum, sort = TRUE)
