@@ -4,6 +4,7 @@ subtitle: "Lab Meeting 2019-01-29"
 author: "Michelle Stuart"
 date: "2019/01/22 (updated: `r Sys.Date()`)"
 output:
+  github_document: default
   xaringan::moon_reader:
     css: ["default", "rutgers", "rutgers-fonts"]
     lib_dir: libs
@@ -11,6 +12,8 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+always_allow_html: yes      
+      
 ---
 
 ```{r setup, include=FALSE}
