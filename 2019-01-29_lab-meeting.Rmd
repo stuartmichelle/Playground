@@ -1,0 +1,223 @@
+---
+title: "What I Missed at the 2019 RStudio Conference"
+subtitle: "Lab Meeting 2019-01-29"
+author: "Michelle Stuart"
+date: "2019/01/22 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: ["default", "rutgers", "rutgers-fonts"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+class: center, middle
+
+## The over arching theme was  
+
+
+# "Reproducibility"  
+
+https://medium.com/@sean_50535/rstudio-conf-2019-the-theme-you-may-have-missed-a3e2993a8121
+
+???
+This article discusses package management and how it can be difficult to reproduce an analysis is package versions have changed.
+
+---
+class: center, middle
+
+# Slides and talks
+
+https://github.com/kbroman/RStudioConf2019Slides
+
+---
+class: center, middle
+<!--- inverse makes the slide white text on black background --->
+
+# Leaflet!
+
+```{r out.width='100%', fig.height=6, eval=require('leaflet'), echo=FALSE, message=FALSE, warning=FALSE}
+library(leaflet)
+library(clownfish)
+library(tidyverse)
+
+
+fish <- fish_anem_dive() %>% 
+  filter(!is.na(sample_id))
+
+coord <- sample_latlon(fish$sample_id) %>% 
+  filter(!is.na(lat))
+
+coord %>% 
+ leaflet() %>% 
+  # add content
+   addTiles() %>%
+  # addProviderTiles(providers$Esri.WorldImagery) %>%
+   addMarkers(clusterOptions = markerClusterOptions(), 
+              popup = coord$sample_id, 
+              lat = coord$lat, 
+              lng = coord$lon)
+
+```
+
+---
+background-image: url(https://user-images.githubusercontent.com/163582/47672385-e12dba00-db7f-11e8-92de-af94d5bab12f.jpg)
+background-position: cover
+class: center, bottom
+
+???
+Pagedown
+
+
+
+
+---
+class: center, inverse
+
+# Make your data more reproducible
+
+Make packages, even if they are only for yourself - great resources:
+https://www.rstudio.com/resources/videos/you-can-make-a-package-in-20-minutes/  
+
+Funny talk, relatable - https://www.rstudio.com/resources/videos/five-packages-in-five-weeks-from-boredom-to-contribution-via-blogging/
+
+Hillary Parker's R package in 5 minutes - https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/
+
+
+---
+background-image: url(https://whattheyforgot.org/img/if-you-liked-it-you-should-have-saved-the-source-for-it.jpg)
+background-size: 75%
+background-position: top
+class: bottom, center
+
+# WTF
+At the 2019 Rstudio Conference they taught a workshop called What They Forgot to Teach Us About R.
+You can follow along here: https://whattheyforgot.org/
+
+---
+class: middle, inverse
+
+
+# Tired: Use absolute paths or setwd()
+# Wired: use here::here()
+    
+
+---
+class: middle
+
+
+### Tired: Search and browse for an .Rproj to open with Mac Spotlight. 
+### Wired: Prioritize .Rproj files for immediate open/actions with https://www.alfredapp.com/
+    
+???
+Spotlight on steroids
+
+
+---
+class: middle, inverse
+
+
+## Tired: “my tired wired notes.Rmd” 
+## Wired: “2019-01-15_Notes-from-WTF-workshop.Rmd”   
+(for file names: use IS0 8601 dates, separate fields by “_”, separate words within fields by “-“)
+
+---
+class: middle
+
+# Tired: Load R scripts with source() 
+# Wired: Load R scripts with callr 
+
+???
+this appears to be something for developers who are passing things between coding languages
+    
+
+---
+class: middle, inverse
+
+
+# Tired: Use standard fonts in Rstudio 
+# Wired: Use FiraCode (gives you the fancy assignment arrow) 
+
+???
+supposed to be available in the global options but I don’t see it - remember to make your screen happy.
+
+---
+class: middle
+
+# Tired: Inspect an object with class() 
+# Wired: Inspect an object with str() 
+
+???
+shows more info
+
+---
+class: middle, inverse
+
+
+# Tired: Use traceback() + browser() for debugging 
+(*not that tired, still a good way) 
+# Wired: Set options(error = recover) then jump around through the traceback with “s” 
+
+---
+class: middle
+
+# Tired: Use plain old Terminal 
+# Wired: Use oh-my-zsh 
+
+???
+geared toward developers
+
+---
+class: middle, inverse
+
+# Tired: Download R files from CRAN to look at source code 
+# Wired: Use @jimhester_'s lookup package 
+
+???
+- developer based
+
+---
+class: middle
+
+# Tired: Do a lot of clicking to set up GitHub repos within RStudio 
+(*not really tired, still a solid strategy) 
+# Wired: Do it with usethis 
+
+???
+- help for creating packages
+
+---
+class: middle
+
+# Tired: Launch vanilla R as if you’re not an opinionated monster 🧟
+# Wired: Make R respect all your quirks via .Rprofile and .Renviron *and* track these files in GitHub for use on multiple machines
+
+---
+class: middle
+
+# Tired: brew install R 
+# Wired: brew cask install r-app 
+
+???
+- for home-brew users
+
+---
+class: middle, inverse
+
+# Tired: a new commit which should have been part of the previous commit 
+# Wired: git commit --amend
+
+---
+class: middle
+
+# Tired: Lots of code tinkering to figure what the heck is embedded in a complicated list 
+# Wired: View(listObj) in Rstudio
+
+
+---
