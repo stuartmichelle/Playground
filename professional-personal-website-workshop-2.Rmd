@@ -1,0 +1,235 @@
+---
+title: "Professional Personal Website Workshop"
+subtitle: "(PPWW)"
+author: "Michelle Stuart"
+institute: "Rutgers University"
+date: "2019/08/22 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: [shinobi, metropolis-fonts]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+???
+BEFORE:
+- install RStudio and blogdown package
+- find a profile photo that you like
+- download a few images that you like from unsplash.com
+---
+class: center, middle
+
+## First, create a website on your personal machine
+
+--
+
+# 1. Create a github repo
+
+
+
+--
+
+# 2. Clone the repo into RStudio
+
+--
+
+
+# 3. In the command line in RStudio
+```{r eval=FALSE}
+blogdown::new_site(theme = "gcushen/hugo-academic",
+                   sample = TRUE, 
+                   theme_example = TRUE, 
+                   empty_dirs = TRUE,
+                   to_yaml = TRUE)
+```
+
+---
+
+### Double check the minimum hugo version against what is installed on your machine.  
+### [https://themes.gohugo.io/academic](https://themes.gohugo.io/academic)
+
+### Check version from the command line in RStudio
+```{r eval=FALSE}
+blogdown::hugo_version()
+```
+
+### Update if needed from the command line in RStudio and restart R.
+```{r eval=FALSE}
+update_hugo(force=TRUE)
+```
+
+---
+class: inverse, center, middle
+
+# Congratulations, you have created a website
+
+---
+class: inverse, center, middle
+
+# Second, publish the website to the internet
+--
+
+# We can do that right now! 
+
+--
+
+# [https://app.netlify.com/drop](https://app.netlify.com/drop)  
+### Drag and drop the public folder
+
+---
+
+# Change your URL
+
+--
+
+## 1. Create a netlify account through your github account.  
+
+--
+
+## 2. Link to your repo holding your website.
+Every time you push to github, your site updates.
+
+--
+## 3. Click on site settings, and change site name.
+
+---
+
+# Swap the netlify URL for rbind.io
+--
+
+Later tonight, we don't have time right now
+--
+
+## Why?
+
+---
+
+# Swap the netlify URL for rbind.io
+--
+
+## Why? rbind.io might be easier to say than netlify.com and easier to tell people in fast situations.  
+## **This is how I changed my website to mstuart.rbind.io.**
+
+--
+
+# go to github.com/rbind/support and create an issue.
+
+---
+
+# But this website doesn't look right...
+--
+
+## You can change anything on this website.
+
+### It's like Mr. Potato Head.
+
+#### Play with it.
+
+---
+## Before we start fixing the appearance, 
+## there are some settings...
+--
+
+### Using netlify means we need to add a file called netlify.toml
+**In the command line**
+```{r eval=FALSE}
+file.create("netlify.toml")
+```
+
+--
+## Open the file and copy and paste:
+```{r eval=FALSE}
+[build]
+  publish = "public"
+  command = "hugo"
+[context.production.environment]
+  HUGO_VERSION = "0.55.6"
+  HUGO_ENV = "production"
+  HUGO_ENABLEGITINFO = "true"
+[context.branch-deploy.environment]
+  HUGO_VERSION = "0.55.6"
+```
+---
+## Add the public/ folder to your .gitignore
+--
+
+## Commit and push to github
+--
+
+## Open and edit config/_default/params.toml. 
+- change the color theme (don’t forget the day/night theme button!)
+- change the font
+- add a site description and a sharing image (once you push and publish your site with these changes, you can verify your shiny new twitter card [here](https://cards-dev.twitter.com/validator))
+
+--
+
+## Open and edit config/_default/menus.toml
+- each [[main]] entry in this file is an element in your top navbar. Make it how you want it!
+---
+# Finding your way around
+<img src="professional-personal-website-workshop-2_files/figure-html/directory-all-3.jpeg" width = "90%">
+
+---
+
+### Each of the horizontal sections corresponds to one of these "widgets"
+Every section has a page  
+<img src="professional-personal-website-workshop-2_files/figure-html/directory-side-by-side.jpeg" width = "100%">
+
+---
+### You can even create your own sections.
+Just copy one of the other widgets and rename it. 
+<img src="professional-personal-website-workshop-2_files/figure-html/michelles-directory.jpeg" width = "50%">
+
+---
+### Let's change the content
+--
+
+## Open content > authors > admin > _index.md
+
+Change the content to describe you.
+
+--
+
+Replace the file avatar.jpg with your head shot renamed avatar.jpg
+---
+## For any section you don't want, change the widget to active = FALSE.
+
+--
+
+## If you want to add a background photo like a banner, add that background photo to the widget in the Background Photo section.
+This is a great place for those unsplash images
+
+# Save the photo to static > img
+---
+
+# Change the color scheme
+
+## Copy and paste the custom.css file from the git repo into assets > css
+--
+
+## Open config > _default > params.toml
+
+## Change color_theme to "custom"
+
+---
+# Everything beyond this point is playing to see what you like.
+## Create a site that embodies who you are as a professional.
+### I like to throw some personal stuff in there because I'm a human too.
+
+---
+## Change the colors in the css
+
+intenet speak for color (hex) = #36caca
+
+hex color picker on google tells us this is a teal like color
+
+I change a color and see what happens, then find and replace all of the occurences of that color.
+---
+## Mac has a built in color picker called **Digital Color Meter**
+that will tell you the color in an image 
+- find colors in your background photos and use those for your font colors.
